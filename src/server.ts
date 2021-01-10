@@ -39,22 +39,33 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
-  app.get("/filteredimage/:image_url",async(req,res)=>{
+  app.get("/filteredimage",async(req,res)=>{
     console.log("in");
-    let { image_url } = req.params.image_url;
+    let image_url   = req.query.image_url;
     //Validate url
     const isValideUrl = image_url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     if(isValideUrl == null)
-      return res.status(400).send(`Inavlid url! Try again with valid url`);
+      return res.status(401).send(`Inavlid url! Try again with valid url`);
     else{
     //Process Image
-      const filteredImage = filterImageFromURL(image_url);
+      const filteredImage =await filterImageFromURL(image_url);
+      console.log(filteredImage);
       if(filteredImage===undefined||filteredImage===null)
-      return res.status(400).send(`Unable to filter image`);
-    else
-      return res.status(200).sendFile(filteredImage+'');
+        return res.status(401).send(`Unable to filter image`);
+      else{
+        res.on('finish', function() {
+          deleteLocalFiles([filteredImage]);  
+        });
+        return res.status(200).sendFile(''+filteredImage);
+
+      }
+      
     }
   })
+
+  function sendResponse(filteredImage:any){
+    return 
+  }
   //! END @TODO1
   
   // Root Endpoint
