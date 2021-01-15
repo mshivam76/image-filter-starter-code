@@ -31,6 +31,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
 Follow the process described in the course to `eb init` a new application and `eb create` a new environment to deploy your image-filter service! Don't forget you can use `eb deploy` to push changes.
 
+Please find below link and respective screenshot for deployment in  deployment_screenshots folder:
+http://image-filter-mishra-dev-dev.ap-south-1.elasticbeanstalk.com/filteredimage?image_url=https://images.all-free-download.com/images/graphiclarge/flower_bulb_shop_199017.jpg
 ## Stand Out (Optional)
 
 ### Refactor the course RESTapi
